@@ -3,7 +3,7 @@
     height: 100vh;
     background: url('/images/hos.jpg') no-repeat;
     background-position: right;
-}
+} 
 
 .login::after{
     content: "";
