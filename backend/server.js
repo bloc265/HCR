@@ -4,6 +4,12 @@ const exphbs = require("express-handlebars");
 const morgan = require("morgan");
 const connectDb = require("./config/db");
 const path = require("path");
+const passport = require("passport");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const flash = require("express-flash");
+const init = require("./config/passport");
 
 // init app
 const app = express();
@@ -16,10 +22,30 @@ app.use(
   })
 );
 
+init(passport);
+
 // dotenv config
 dotenv.config({
   path: "./config/config.env",
 });
+
+let hour = 7200000;
+app.use(
+  session({
+    secret: process.env.SECRET,
+    saveUninitialized: false,
+    resave: true,
+    cookie: {
+      maxAge: hour,
+    },
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_CONN,
+    }),
+  })
+);
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // db setup
 connectDb();
@@ -38,6 +64,7 @@ app.use(express.static("./public"));
 
 // routes
 app.use("/", require("./routes/index"));
+app.use("/home", require("./routes/Home"));
 
 // morgan config
 if (process.env.NODE_ENV == "development") {
