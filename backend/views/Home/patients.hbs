@@ -1,0 +1,22 @@
+<div class="container-sm bg-grey card shadow-lg p-4 mt-3 patients">
+    <div class="mb-3 d-flex justify-content-start">
+        <a href="/home" class=" "><i class="fas fa-arrow-left fa-lg"></i></a>
+        <h4 class="text-center mx-auto">Patients</p>
+    </div>
+    {{#each patient}}
+    <div class="container card shadow-lg p-3" style="width: 30rem;">
+        <div class="card-body">
+            <h4 class="card-text">{{name}}</h4>
+            <p class="card-text">{{email}}</p>
+        </div>
+
+    </div>
+    {{else}}
+    <div class="d-flex flex-column justify-content-center">
+        <p class="text-center">No patient Found</p>
+        <a href="" class="btn btn-primary"> Create A New Record</a>
+    </div>
+    {{/each}}
+
+
+</div>

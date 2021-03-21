@@ -3,13 +3,14 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const passport = require("passport");
-
-router.get("/", (req, res) => {
+const { ensureGuest } = require("../config/verify");
+router.get("/", ensureGuest, (req, res) => {
   res.render("Auth/login");
 });
 
 router.post(
   "/signin",
+  ensureGuest,
   passport.authenticate("local", {
     successRedirect: "/home",
     failureRedirect: "/",
@@ -17,7 +18,7 @@ router.post(
   })
 );
 
-router.post("/register", async (req, res) => {
+router.post("/register", ensureGuest, async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
