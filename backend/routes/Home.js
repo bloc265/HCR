@@ -22,4 +22,6 @@ router.get("/search", ensureAuth, async (req, res) => {
   }
 });
 
+router.get("/new_record", async (req, res) => {});
+
 module.exports = router;

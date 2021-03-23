@@ -14,6 +14,20 @@ const patient_schema = new mongoose.Schema({
   residence_area: {
     type: String,
   },
+  password: {
+    type: String,
+    default: "Pegasus101",
+  },
+  covid_vacination: {
+    type: String,
+    enum: ["vaccinated", "not vaccinated", "partially vacinnated"],
+    default: "not vacinnated",
+  },
+  covid_test: {
+    type: String,
+    enum: ["Positive", "Negative"],
+    default: "Negative",
+  },
   date_of_birth: {
     type: String,
     required: true,

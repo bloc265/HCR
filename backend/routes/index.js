@@ -35,4 +35,9 @@ router.post("/register", ensureGuest, async (req, res) => {
   }
 });
 
+router.post("/logout", (req, res) => {
+  req.logOut();
+  res.redirect("/");
+});
+
 module.exports = router;
