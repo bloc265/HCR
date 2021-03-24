@@ -22,6 +22,32 @@ router.get("/search", ensureAuth, async (req, res) => {
   }
 });
 
-router.get("/new_record", async (req, res) => {});
+router.get("/new_record", async (req, res) => {
+  res.render("Home/new");
+});
+
+router.post("/new", async (req, res) => {
+  const user = await Patient.findOne({
+    phone: req.body.phone,
+    email: req.body.email,
+  });
+
+  if (user) {
+  } else {
+    let name = req.body.first_name + req.body.last_name;
+    const new_Patient = new Patient({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      phone: req.body.phone,
+      date_of_birth: req.body.date_of_birth,
+      residence_area: req.body.residence_area,
+      name: name,
+    });
+
+    await new_Patient.save();
+    res.redirect("/home");
+  }
+});
 
 module.exports = router;

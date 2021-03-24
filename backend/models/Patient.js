@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 
 const patient_schema = new mongoose.Schema({
+  first_name: {
+    type: String,
+    required: true,
+  },
+  last_name: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -21,7 +29,7 @@ const patient_schema = new mongoose.Schema({
   covid_vacination: {
     type: String,
     enum: ["vaccinated", "not vaccinated", "partially vacinnated"],
-    default: "not vacinnated",
+    default: "not vaccinated",
   },
   covid_test: {
     type: String,
