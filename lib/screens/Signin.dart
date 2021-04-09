@@ -78,7 +78,7 @@ class _SigninState extends State<Signin> {
                           hintText: "Password",
                           prefixIcon: Icon(Icons.lock),
                           enabledBorder: OutlineInputBorder(
-                              gapPadding: 10,
+                              gapPadding: 15,
                               borderRadius: BorderRadius.circular(30)),
                           errorBorder: OutlineInputBorder(
                               gapPadding: 10,
