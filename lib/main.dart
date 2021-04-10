@@ -4,6 +4,9 @@ import 'package:hcr/screens/Splash.dart';
 
 void main() {
   runApp(MaterialApp(
-    routes: {'/': (context) => SplashScreen(), '/login': (context) => Signin()},
+    routes: {
+      '/': (context) => SplashScreen(),
+      '/login': (context) => Signin(),
+    },
   ));
 }

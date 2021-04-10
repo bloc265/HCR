@@ -6,6 +6,7 @@ const connectDb = require("./config/db");
 const path = require("path");
 const passport = require("passport");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("express-flash");
@@ -21,6 +22,7 @@ app.use(
     extended: false,
   })
 );
+app.use(cors());
 
 init(passport);
 
@@ -29,7 +31,7 @@ dotenv.config({
   path: "./config/config.env",
 });
 
-let hour = 7200000;
+let hour = 7200000000;
 app.use(
   session({
     secret: process.env.SECRET,

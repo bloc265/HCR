@@ -13,8 +13,7 @@
   position: relative;
 }
 
-.login::after,
-.home::after {
+.login::after {
   content: "";
   position: absolute;
   top: 0;
