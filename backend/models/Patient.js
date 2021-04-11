@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const patient_schema = new mongoose.Schema({
   first_name: {
@@ -41,5 +42,14 @@ const patient_schema = new mongoose.Schema({
     required: true,
   },
 });
+
+patient_schema.methods.comparePassword = function (passw, cb) {
+  bcrypt.compare(passw, this.password, function (err, isMatch) {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, isMatch);
+  });
+};
 
 module.exports = mongoose.model("patient", patient_schema);

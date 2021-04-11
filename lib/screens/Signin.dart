@@ -113,6 +113,7 @@ class _SigninState extends State<Signin> {
                         },
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
+                            errorStyle: TextStyle(),
                             labelText: "Password",
                             hintText: "Password",
                             labelStyle: TextStyle(color: textColor),
@@ -121,22 +122,29 @@ class _SigninState extends State<Signin> {
                               color: textColor,
                             ),
                             enabledBorder: OutlineInputBorder(
-                                gapPadding: 15,
+                                // gapPadding: 15,
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(30)),
                             errorBorder: OutlineInputBorder(
-                                gapPadding: 10,
+                                // gapPadding: 10,
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(30)),
                             focusedBorder: OutlineInputBorder(
-                              gapPadding: 10,
+                              // gapPadding: 10,
                               borderSide: BorderSide.none,
                             )),
                       ),
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final email = _email.text.trim();
+                        final password = _password.text.trim();
+                        if (_formkey.currentState.validate()) {
+                          print(email);
+                          print(password);
+                        }
+                      },
                       child: Text(
                         'Sign in',
                         style: TextStyle(
