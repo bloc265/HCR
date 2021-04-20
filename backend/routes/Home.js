@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const crypto = require("crypto");
+const accountsid = process.env.ACCOUNT_SSID;
+const auth_token = process.env.AUTH_TOKEN;
+const client = require("twilio")(accountsid, auth_token);
 const bcrypt = require("bcryptjs");
 const Patient = require("../models/Patient");
 const { ensureAuth, ensureGuest } = require("../config/verify");
@@ -36,7 +39,7 @@ router.post("/new", async (req, res) => {
 
   if (user) {
   } else {
-    let password = crypto.randomBytes(8).toString("hex");
+    let password = crypto.randomBytes(6).toString("hex");
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     let name = req.body.first_name + req.body.last_name;
@@ -52,7 +55,17 @@ router.post("/new", async (req, res) => {
     });
 
     await new_Patient.save();
-    res.redirect("/home");
+
+    client.messages
+      .create({
+        body: `An account has been created on Health covid Registration\n User email:${req.body.email} \n Password:${password}`,
+        from: process.env.FROM_NUMBER,
+        to: req.body.phone,
+      })
+      .then((message) => {
+        res.redirect("/home");
+      })
+      .catch((err) => console.log(err));
   }
 });
 
