@@ -71,6 +71,7 @@ app.use(express.static("./public"));
 // routes
 app.use("/", require("./routes/index"));
 app.use("/home", require("./routes/Home"));
+app.use("/api", require("./routes/api"));
 
 // morgan config
 if (process.env.NODE_ENV == "development") {
