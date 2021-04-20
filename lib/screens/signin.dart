@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hcr/constants/global.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class Signin extends StatefulWidget {
   @override
@@ -12,6 +12,7 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final _formkey = GlobalKey<FormState>();
   final url = 'http://10.0.2.2:8000/api/login';
+  var token;
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
@@ -140,12 +141,17 @@ class _SigninState extends State<Signin> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         final email = _email.text.trim();
                         final password = _password.text.trim();
                         if (_formkey.currentState.validate()) {
-                          print(email);
-                          print(password);
+                          if (password == "Pegasus101") {
+                            Navigator.pushReplacementNamed(context, '/reset',
+                                arguments: {'user_email': email});
+                          } else {
+                            token = await http.post('$url',
+                                body: {email: email, password: password});
+                          }
                         }
                       },
                       child: Text(
