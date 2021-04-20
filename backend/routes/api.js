@@ -18,8 +18,10 @@ router.post("/login", (req, res) => {
       } else {
         patient.comparePassword(req.body.password, (err, isMatch) => {
           if (isMatch && !err) {
-            let token = jwt.encode(patient, process.env.SECRET);
-            res.status(200).json({ token: token, msg: "Authenticated" });
+            let token = jwt.sign(patient, process.env.SECRET);
+            res
+              .header("auth-token", token)
+              .json({ success: true, msg: "Authenticated" });
           } else {
             res.status(403).send({ success: false, msg: "Incorrect password" });
           }
