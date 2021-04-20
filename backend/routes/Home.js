@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
 const Patient = require("../models/Patient");
 const { ensureAuth, ensureGuest } = require("../config/verify");
 
@@ -34,12 +36,16 @@ router.post("/new", async (req, res) => {
 
   if (user) {
   } else {
+    let password = crypto.randomBytes(8).toString("hex");
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
     let name = req.body.first_name + req.body.last_name;
     const new_Patient = new Patient({
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
       phone: req.body.phone,
+      password: hash,
       date_of_birth: req.body.date_of_birth,
       residence_area: req.body.residence_area,
       name: name,

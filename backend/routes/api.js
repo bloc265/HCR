@@ -6,7 +6,7 @@ const router = express.Router();
 
 // @desc POST request to login
 // @route /api/login
-router.get("/login", (req, res) => {
+router.post("/login", (req, res) => {
   Patient.findOne(
     {
       email: req.body.email,

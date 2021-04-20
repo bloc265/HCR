@@ -25,7 +25,6 @@ const patient_schema = new mongoose.Schema({
   },
   password: {
     type: String,
-    default: "Pegasus101",
   },
   covid_vacination: {
     type: String,
