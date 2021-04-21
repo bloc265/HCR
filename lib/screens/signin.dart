@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hcr/constants/constants.dart';
 import 'package:hcr/constants/global.dart';
 import 'package:hcr/utils/loader.dart';
 import 'package:http/http.dart' as http;
@@ -157,6 +158,9 @@ class _SigninState extends State<Signin> {
                             );
                             final jsonData = convert.jsonDecode(token.body);
                             if (jsonData['success']) {
+                              Constants.prefs.setBool("isLoggedin", true);
+                              Constants.prefs
+                                  .setString("token", jsonData['token']);
                               Fluttertoast.showToast(
                                   msg: jsonData['msg'],
                                   gravity: ToastGravity.BOTTOM,

@@ -12,9 +12,11 @@ Future main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) {
     runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => SplashScreen(),
-        '/login': (context) => Signin(),
+        '/login': (context) =>
+            Constants.prefs.getBool("isLoggedin") ? Home() : Signin(),
         '/home': (context) => Home()
       },
     ));
