@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hcr/constants/global.dart';
 import 'package:hcr/utils/loader.dart';
 import 'package:http/http.dart' as http;
@@ -144,16 +145,44 @@ class _SigninState extends State<Signin> {
                   ),
                   TextButton(
                       onPressed: () async {
-                        // Dialogs.showLoadingDialog(
-                        //     context, _keyLoader); //invoking login
-
-                        final email = _email.text.trim();
-                        final password = _password.text.trim();
-                        if (_formkey.currentState.validate()) {
-                          token = await http.post('$url',
-                              body: {"email": email, "password": password});
-                          final jsonData = convert.jsonDecode(token.body);
-                          print(jsonData);
+                        Dialogs.showLoadingDialog(
+                            context, _keyLoader); //invoking login
+                        try {
+                          final email = _email.text.trim();
+                          final password = _password.text.trim();
+                          if (_formkey.currentState.validate()) {
+                            token = await http.post(
+                              '$url',
+                              body: {"email": email, "password": password},
+                            );
+                            final jsonData = convert.jsonDecode(token.body);
+                            if (jsonData['success']) {
+                              Fluttertoast.showToast(
+                                  msg: jsonData['msg'],
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: textColor,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                              Navigator.pushReplacementNamed(context, '/home');
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: jsonData['msg'],
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: textColor,
+                                  textColor: redish,
+                                  fontSize: 16.0);
+                              Navigator.of(_keyLoader.currentContext,
+                                      rootNavigator: true)
+                                  .pop();
+                            }
+                          }
+                        } catch (e) {
+                          Navigator.of(_keyLoader.currentContext,
+                                  rootNavigator: true)
+                              .pop();
+                          print(e);
                         }
                       },
                       child: Text(
