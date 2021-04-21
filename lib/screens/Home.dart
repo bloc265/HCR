@@ -9,6 +9,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentTab = 0;
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,33 +32,54 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      body: Cards(),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 40.7,
-        iconSize: 31,
-        unselectedItemColor: textColor,
-        currentIndex: _currentTab,
-        selectedItemColor: redish,
-        onTap: (int value) {
-          setState(() {
-            _currentTab = value;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-              ),
-              title: SizedBox.shrink()),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: SizedBox.shrink()),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.settings,
-              ),
-              title: SizedBox.shrink())
-        ],
+      body: tabBodies[_currentTab],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: textdata,
+          boxShadow: [
+            BoxShadow(
+              color: black.withOpacity(0.7),
+              offset: Offset(1.5, 1.8),
+              blurRadius: 20.9,
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          elevation: 40.7,
+          iconSize: 31,
+          unselectedItemColor: textColor,
+          currentIndex: _currentTab,
+          selectedItemColor: redish,
+          items: bottomTabs,
+          onTap: (index) {
+            setState(() {
+              _currentTab = index;
+            });
+          },
+        ),
       ),
     );
   }
+
+  final List<BottomNavigationBarItem> bottomTabs = [
+    BottomNavigationBarItem(
+        icon: Icon(
+          Icons.home,
+        ),
+        title: SizedBox.shrink()),
+    BottomNavigationBarItem(icon: Icon(Icons.person), title: SizedBox.shrink()),
+    BottomNavigationBarItem(
+        icon: Icon(
+          Icons.settings,
+        ),
+        title: SizedBox.shrink())
+  ];
+
+  final List tabBodies = [
+    Cards(),
+    Container(color: redish),
+    Container(
+      color: Colors.blue,
+    )
+  ];
 }
