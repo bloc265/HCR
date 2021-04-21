@@ -66,13 +66,13 @@ class _HomeState extends State<Home> {
         icon: Icon(
           Icons.home,
         ),
-        title: SizedBox.shrink()),
-    BottomNavigationBarItem(icon: Icon(Icons.person), title: SizedBox.shrink()),
+        label: ""),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
     BottomNavigationBarItem(
         icon: Icon(
           Icons.settings,
         ),
-        title: SizedBox.shrink())
+        label: "")
   ];
 
   final List tabBodies = [
