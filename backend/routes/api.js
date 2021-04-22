@@ -31,4 +31,8 @@ router.post("/login", (req, res) => {
   );
 });
 
+router.get("/info", (req, res) => {
+  console.log(req.headers);
+});
+
 module.exports = router;
