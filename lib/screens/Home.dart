@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcr/constants/constants.dart';
 import 'package:hcr/constants/global.dart';
 import 'package:hcr/widgets/cards.dart';
 
@@ -17,13 +18,15 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         title: Text(
           'HCR',
-          style: TextStyle(color: black),
+          style: TextStyle(color: textColor),
         ),
         centerTitle: true,
         actions: [
           GestureDetector(
             onTap: () {
-              print('logout');
+              Constants.prefs.setBool("isLoggedin", false);
+              Constants.prefs.setString("token", null);
+              Navigator.pushReplacementNamed(context, '/login');
             },
             child: Icon(
               Icons.logout,
