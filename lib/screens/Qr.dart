@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hcr/constants/constants.dart';
 import 'package:hcr/constants/global.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -8,6 +9,11 @@ class Qr extends StatefulWidget {
 }
 
 class _QrState extends State<Qr> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +28,12 @@ class _QrState extends State<Qr> {
         centerTitle: true,
       ),
       body: Center(
-        child: Text("data"),
-      ),
+          child: QrImage(
+        data: "12345789",
+        version: QrVersions.auto,
+        foregroundColor: textColor,
+        padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
+      )),
     );
   }
 }
